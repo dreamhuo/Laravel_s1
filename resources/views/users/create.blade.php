@@ -10,6 +10,8 @@
     </div>
     <div class="card-body">
       <form method="POST" action="{{ route('users.store') }}">
+          <!-- Laravel 提供了全局辅助函数 old 来帮助我们在 Blade 模板中显示旧输入数据。
+            这样当我们信息填写错误，页面进行重定向访问时，输入框将自动填写上最后一次输入过的数据 -->
           <div class="form-group">
             <label for="name">名称：</label>
             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
@@ -29,7 +31,7 @@
             <label for="password_confirmation">确认密码：</label>
             <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}">
           </div>
-
+          {{ csrf_field() }}
           <button type="submit" class="btn btn-primary">注册</button>
       </form>
     </div>
