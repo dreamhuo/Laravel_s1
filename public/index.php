@@ -56,7 +56,5 @@ $response = $kernel->handle(
 
 $response->send();
 
-echo "看一下7";
-
 exit();
 $kernel->terminate($request, $response);
