@@ -10662,7 +10662,13 @@ a.text-dark:focus {
   }
 }
 
-h1 {
-  font-size: 12px;
+body {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+nav.navbar.navbar-expand-lg {
+  margin-bottom: 20px;
+  background-color: #3c3e42 !important;
 }
 
