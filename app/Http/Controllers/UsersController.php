@@ -32,6 +32,24 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6'
         ]);
-        return;
+        // 可以借助 Request 使用下面的这种方式来获取 name 的值
+        // $name = $request->name;
+        // 需要获取用户输入的所有数据，可使用：
+        // $data = $request->all();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        // 而当我们想存入一条缓存的数据，让它只在下一次的请求内有效时
+        // 则可以使用 flash 方法。flash 方法接收两个参数
+        // 第一个为会话的键
+        // 第二个为会话的值，我们可以通过下面这行代码的为会话赋值。
+        // 之后我们可以使用 session()->get('success') 通过键名来取出对应会话中的数据
+         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        // 用户模型 User::create() 创建成功后会返回一个用户对象
+        // 并包含新注册用户的所有信息。
+        // 我们将新注册用户的所有信息赋值给变量 $user，并通过路由跳转来进行数据绑定。
+        return redirect()->route('users.show', [$user]);
     }
 }
