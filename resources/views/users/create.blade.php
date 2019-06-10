@@ -9,6 +9,7 @@
       <h5>注册</h5>
     </div>
     <div class="card-body">
+      @include('shared._errors')
       <form method="POST" action="{{ route('users.store') }}">
           <!-- Laravel 提供了全局辅助函数 old 来帮助我们在 Blade 模板中显示旧输入数据。
             这样当我们信息填写错误，页面进行重定向访问时，输入框将自动填写上最后一次输入过的数据 -->
