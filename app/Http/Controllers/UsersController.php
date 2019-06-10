@@ -18,6 +18,32 @@ class UsersController extends Controller
         // show 方法添加完成之后，我们便能在视图中使用 user 变量来访问通过
         return view('users.show', compact('user'));
     }
+
+    // 利用了『隐性路由模型绑定』功能，直接读取对应 ID 的用户实例 $user
+    // 将查找到的用户实例 $user 与编辑视图进行绑定
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    // update 方法接收两个参数
+    // 第一个为自动解析用户 id 对应的用户实例对象
+    // 第二个则为更新用户表单的输入数据
+    public function update(User $user, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('users.show', $user->id);
+    }
+
     public function store(Request $request)
     {
         // validator 由 App\Http\Controllers\Controller 类中的 ValidatesRequests 进行定义
