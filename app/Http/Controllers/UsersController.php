@@ -41,6 +41,8 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        // 要让一个已认证通过的用户实例进行登录，可以使用:
+        Auth::login($user);
         // 而当我们想存入一条缓存的数据，让它只在下一次的请求内有效时
         // 则可以使用 flash 方法。flash 方法接收两个参数
         // 第一个为会话的键
