@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -19,6 +20,12 @@ class UsersController extends Controller
         // Auth 中间件在过滤指定动作时，若该用户未通过身份验证（未登录用户），默认将会被重定向到 /login 登录页面
         $this->middleware('auth', [
             'except' => ['show', 'create', 'store']
+        ]);
+        // 可以使用 Auth 中间件提供的 guest 选项
+        // 用于指定一些只允许未登录用户访问的动作
+        // 只让未登录用户访问注册页面
+        $this->middleware('guest', [
+            'only' => ['create']
         ]);
     }
     public function create()
