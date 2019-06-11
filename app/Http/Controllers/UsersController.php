@@ -19,7 +19,7 @@ class UsersController extends Controller
         // 提倡在控制器 Auth 中间件使用中，首选 except 方法，这样的话，当你新增一个控制器方法时，默认是安全的
         // Auth 中间件在过滤指定动作时，若该用户未通过身份验证（未登录用户），默认将会被重定向到 /login 登录页面
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store', 'index']
         ]);
         // 可以使用 Auth 中间件提供的 guest 选项
         // 用于指定一些只允许未登录用户访问的动作
@@ -27,6 +27,19 @@ class UsersController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+    }
+    public function index()
+    {
+        // 取出所有用户
+        // $users = User::all();
+        // 每页取出 10 条数据
+        // 当你访问 /users?page=2 链接时，访问的第二页数据
+        // 在上面代码我们使用 paginate 方法来指定每页生成的数据数量为 10 条
+        // 即当我们有 50 个用户时，用户列表将被分为五页进行展示
+        // 在调用 paginate 方法获取用户列表之后，便可以通过以下代码在用户列表页上渲染分页链接
+        // {!! $users->render() !!}
+        $users = User::paginate(2);
+        return view('users.index', compact('users'));
     }
     public function create()
     {
