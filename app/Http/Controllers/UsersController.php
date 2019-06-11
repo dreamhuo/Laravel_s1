@@ -37,6 +37,11 @@ class UsersController extends Controller
     // 将查找到的用户实例 $user 与编辑视图进行绑定
     public function edit(User $user)
     {
+        // authorize 方法接收两个参数，第一个为授权策略的名称，第二个为进行授权验证的数据。
+        // update 是指授权类里的 update 授权方法，$user 对应传参 update 授权方法的第二个参数
+        // update 授权方法时候提起的，调用时，默认情况下，我们 不需要 传递第一个参数
+        // 也就是当前登录用户至该方法内，因为框架会自动加载当前登录用户
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -45,6 +50,7 @@ class UsersController extends Controller
     // 第二个则为更新用户表单的输入数据
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
