@@ -20,4 +20,11 @@ class UserPolicy
         // 调用时，默认情况下，我们 不需要 传递当前登录用户至该方法内，因为框架会自动加载当前登录用户
         return $currentUser->id === $user->id;
     }
+    // destroy 删除用户动作相关的授权
+    public function destroy(User $currentUser, User $user)
+    {
+        // 只有当前用户拥有管理员权限且删除的用户不是自己时才显示链接
+        // Laravel 授权策略提供了 @can Blade 命令，允许我们在 Blade 模板中做授权判断。接下来让我们利用 @can 指令，在用户列表页加上只有管理员才能看到的删除用户按钮。
+        return $currentUser->is_admin && $currentUser->id !== $user->id;
+    }
 }

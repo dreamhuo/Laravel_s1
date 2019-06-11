@@ -129,4 +129,13 @@ class UsersController extends Controller
         // 我们将新注册用户的所有信息赋值给变量 $user，并通过路由跳转来进行数据绑定。
         return redirect()->route('users.show', [$user]);
     }
+    public function destroy(User $user)
+    {
+        // 首先会根据路由发送过来的用户 id 进行数据查找，查找到指定用户之后再调用 Eloquent 模型提供的 delete 方法对用户资源进行删除，成功删除后在页面顶部进行消息提示。最后将用户重定向到上一次进行删除操作的页面，即用户列表页
+        // 验证当前是否是管理员
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
+    }
 }
