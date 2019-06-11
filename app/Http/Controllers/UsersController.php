@@ -47,10 +47,15 @@ class UsersController extends Controller
     }
     public function show(User $user)
     {
+        // 之前进行了模型关联，因此通过 $user->statuses() 取出一个用户的所有微博
+        $statuses = $user->statuses()
+                   ->orderBy('created_at', 'desc')
+                   ->paginate(10);
+        return view('users.show', compact('user', 'statuses'));
         // 将用户对象 $user 通过 compact 方法转化为一个关联数组
         // 作为第二个参数传递给 view 方法，将数据与视图进行绑定
         // show 方法添加完成之后，我们便能在视图中使用 user 变量来访问通过
-        return view('users.show', compact('user'));
+        // return view('users.show', compact('user'));
     }
 
     // 利用了『隐性路由模型绑定』功能，直接读取对应 ID 的用户实例 $user
