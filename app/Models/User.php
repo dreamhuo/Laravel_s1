@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 // 是授权相关功能的引用
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Illuminate\Support\Str;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -50,5 +52,22 @@ class User extends Authenticatable
         $hash = md5(strtolower(trim($this->attributes['email'])));
         // 将转码后的邮箱与链接、尺寸拼接成完整的 URL 并返回；
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+
+    // boot 方法会在用户模型类完成初始化之后进行加载，因此我们对事件的监听需要放在该方法中。
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->activation_token = Str::random(10);
+        });
+    }
+
+    // 由于一个用户拥有多条微博，因此在用户模型中我们使用了微博动态的复数形式 statuses 来作为定义的函数名
+    // 指明一个用户拥有多条微博
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
     }
 }
