@@ -29,3 +29,7 @@ Route::resource('users', 'UsersController');
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
+// 使用 resource 方法来定义微博路由，则会生成完整的符合 RESTful 架构的路由
+// 但我们完成微博的创建和删除只需要两个动作，因此我们可以对 resource 传参 only 键指定只生成某几个动作的路由
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
