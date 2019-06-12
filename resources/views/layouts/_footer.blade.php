@@ -1,10 +1,9 @@
 <footer class="footer">
-  <img class="brand-icon" src="https://iocaffcdn.phphub.org/uploads/sites/KDiyAbV0hj1ytHpRTOlVpucbLebonxeX.png">
-  <a href="#" target=_blank>
-    刻意练习，每日精进
-  </a>
+  <div class="container">
+    <p class="float-left">
+      由 <a href="https://github.com/dreamhuo" target="_blank">白酒二三斤</a> 设计和编码 <span style="color: #e27575;font-size: 14px;">❤</span>
+    </p>
 
-  <div class="float-right">
-    <a href="{{ route('about') }}" >关于</a>
+    <p class="float-right"><a href="mailto:huo8008@126.com">联系我们</a></p>
   </div>
 </footer>
