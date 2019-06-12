@@ -6,13 +6,22 @@
 namespace App\Http\Controllers;
 // 用 use 来引用在 PHP 文件中要使用的类，引用之后便可以对其进行调用
 use Illuminate\Http\Request;
+use Auth;
 
 // StaticPagesController 类继承了父类 App\Http\Controllers\Controller
 class StaticPagesController extends Controller
 {
     public function home()
     {
-        return view('static_pages/home');
+        // 定义了一个空数组 feed_items 来保存微博动态数据
+        $feed_items = [];
+        // Auth::check() 来检查用户是否已登录
+        if (Auth::check()) {
+            // 对微博做了分页处理的操作，每页只显示 30 条微博
+            $feed_items = Auth::user()->feed()->paginate(30);
+        }
+
+        return view('static_pages/home', compact('feed_items'));
     }
 
     public function help()
