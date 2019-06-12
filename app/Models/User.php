@@ -74,8 +74,18 @@ class User extends Authenticatable
     // 首页局部列表
     public function feed()
     {
-        return $this->statuses()
-                    ->orderBy('created_at', 'desc');
+        // return $this->statuses()
+        //             ->orderBy('created_at', 'desc');
+        // 通过 followings 方法取出所有关注用户的信息
+        // 再借助 pluck 方法将 id 进行分离并赋值给 user_ids
+        $user_ids = $this->followings->pluck('id')->toArray();
+        // 将当前用户的 id 加入到 user_ids 数组中
+        array_push($user_ids, $this->id);
+        // 使用 Laravel 提供的 查询构造器 whereIn 方法取出所有用户的微博动态并进行倒序排序
+        // 使用了 Eloquent 关联的 预加载 with 方法，预加载避免了 N+1 查找的问题，大大提高了查询效率
+        return Status::whereIn('user_id', $user_ids)
+                              ->with('user')
+                              ->orderBy('created_at', 'desc');
     }
 
     // 我们可以通过 followers 来获取粉丝关系列表
