@@ -27,4 +27,10 @@ class UserPolicy
         // Laravel 授权策略提供了 @can Blade 命令，允许我们在 Blade 模板中做授权判断。接下来让我们利用 @can 指令，在用户列表页加上只有管理员才能看到的删除用户按钮。
         return $currentUser->is_admin && $currentUser->id !== $user->id;
     }
+
+    public function follow(User $currentUser, User $user)
+    {
+        // 关注表单只有在授权策略通过时才显示，并且控制器关注和取消关注方法里，都需要做授权判断
+        return $currentUser->id !== $user->id;
+    }
 }
