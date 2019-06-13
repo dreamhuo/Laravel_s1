@@ -48,7 +48,7 @@ class UsersController extends Controller
         $data = $request->all();
         // 若有头像，对头像做存储，并把路径保存到数据库里
         if ($request->avatar) {
-            $result = $uploader->save($request->avatar, 'avatars', $user->id);
+            $result = $uploader->save($request->avatar, 'avatars', $user->id, 416);
             // if ($result) 的判断是因为 ImageUploadHandler 对文件后缀名做了限定，不允许的情况下将返回 false
             if ($result) {
                 $data['avatar'] = $result['path'];

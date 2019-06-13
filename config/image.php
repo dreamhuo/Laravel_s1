@@ -14,7 +14,7 @@ return [
     | Supported: "gd", "imagick"
     |
     */
-
+    // 我们使用默认的 gd 即可，如果将要开发的项目需要较专业的图片，请考虑 ImageMagic
     'driver' => 'gd'
 
 ];
