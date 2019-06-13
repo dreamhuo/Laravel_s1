@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
@@ -21,5 +22,21 @@ class UsersController extends Controller
         // 将用户对象变量 $user 通过 compact 方法转化为一个关联数组
         // 并作为第二个参数传递给 view 方法，将变量数据传递到视图中
         return view('users.show', compact('user'));
+    }
+
+    // edit() 方法接受 $user 用户作为传参，也就是说当 URL 是 http://larabbs.test/users/1/edit 时，读取的是 ID 为 1 的用户。
+    // 这里使用的是与 show() 方法一致的 『隐性路由模型绑定』 开发范式
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    // 修改用户信息
+    // 表单请求验证（FormRequest）的工作机制，是利用 Laravel 提供的依赖注入功能
+    // 在 update() 方法声明中，传参 UserRequest。这将触发表单请求类的自动验证机制，验证发生在 UserRequest 中，并使用此文件中方法 rules() 定制的规则，只有当验证通过时，才会执行 控制器 update() 方法中的代码。否则抛出异常，并重定向至上一个页面，附带验证失败的信息
+    public function update(UserRequest $request, User $user)
+    {
+        $user->update($request->all());
+        return redirect()->route('users.show', $user->id)->with('success', '个人资料更新成功！');
     }
 }
