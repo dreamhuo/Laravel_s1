@@ -34,17 +34,22 @@ class UserRequest extends FormRequest
     // introduction.max —— 验证中的字段必须小于或等于 value。
     public function rules()
     {
+        // rules() 方法中新增了图片比例验证规则 dimensions ，仅允许上传宽和高都大于 208px 的图片；
         return [
             'name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/|unique:users,name,' . Auth::id(),
             'email' => 'required|email',
             'introduction' => 'max:80',
+            'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=208,min_height=208',
         ];
     }
     // 自定义表单的提示信息，修改 UserRequest，新增方法 messages()
     // messages() 方法是 表单请求验证（FormRequest）一个很方便的功能，允许我们自定义具体的消息提醒内容，键值的命名规范 —— 字段名 + 规则名称，对应的是消息提醒的内容
     public function messages()
     {
+        // messages() 方法中新增了头像出错时的提示信息。
         return [
+            'avatar.mimes' =>'头像必须是 jpeg, bmp, png, gif 格式的图片',
+            'avatar.dimensions' => '图片的清晰度不够，宽和高需要 208px 以上',
             'name.unique' => '用户名已被占用，请重新填写',
             'name.regex' => '用户名只支持英文、数字、横杠和下划线。',
             'name.between' => '用户名必须介于 3 - 25 个字符之间。',
