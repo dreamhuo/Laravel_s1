@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Handlers\ImageUploadHandler;
 
 class UsersController extends Controller
 {
@@ -34,9 +35,26 @@ class UsersController extends Controller
     // 修改用户信息
     // 表单请求验证（FormRequest）的工作机制，是利用 Laravel 提供的依赖注入功能
     // 在 update() 方法声明中，传参 UserRequest。这将触发表单请求类的自动验证机制，验证发生在 UserRequest 中，并使用此文件中方法 rules() 定制的规则，只有当验证通过时，才会执行 控制器 update() 方法中的代码。否则抛出异常，并重定向至上一个页面，附带验证失败的信息
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, ImageUploadHandler $uploader, User $user)
     {
-        $user->update($request->all());
+        // 在 Laravel 中，我们可直接通过 请求对象（Request） 来获取用户上传的文件
+        // 第一种方法
+        // $file = $request->file('avatar');
+        // 第二种方法，可读性更高
+        // $file = $request->avatar;
+        // Laravel 的『用户上传文件对象』底层使用了 Symfony 框架的 UploadedFile 对象进行渲染，为我们提供了便捷的文件读取和管理接口
+
+        // $data = $request->all(); 赋值 $data 变量，以便对更新数据的操作
+        $data = $request->all();
+        // 若有头像，对头像做存储，并把路径保存到数据库里
+        if ($request->avatar) {
+            $result = $uploader->save($request->avatar, 'avatars', $user->id);
+            // if ($result) 的判断是因为 ImageUploadHandler 对文件后缀名做了限定，不允许的情况下将返回 false
+            if ($result) {
+                $data['avatar'] = $result['path'];
+            }
+        }
+        $user->update($data);
         return redirect()->route('users.show', $user->id)->with('success', '个人资料更新成功！');
     }
 }
