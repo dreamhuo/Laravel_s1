@@ -9,6 +9,13 @@ use App\Handlers\ImageUploadHandler;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        // 在 __construct 方法中调用了 middleware 方法，该方法接收两个参数
+        // 第一个为中间件的名称，第二个为要进行过滤的动作
+        // 通过 except 方法来设定 指定动作 不使用 Auth 中间件进行过滤
+        $this->middleware('auth', ['except' => ['show']]);
+    }
 
     // Laravel 会自动解析定义在控制器方法（变量名匹配路由片段）中的 Eloquent 模型类型声明。
     // 在上面代码中，由于 show() 方法传参时声明了类型 —— Eloquent 模型 User，对应的变量名 $user 会匹配路由片段中的 {user}
@@ -29,6 +36,7 @@ class UsersController extends Controller
     // 这里使用的是与 show() 方法一致的 『隐性路由模型绑定』 开发范式
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -37,6 +45,7 @@ class UsersController extends Controller
     // 在 update() 方法声明中，传参 UserRequest。这将触发表单请求类的自动验证机制，验证发生在 UserRequest 中，并使用此文件中方法 rules() 定制的规则，只有当验证通过时，才会执行 控制器 update() 方法中的代码。否则抛出异常，并重定向至上一个页面，附带验证失败的信息
     public function update(UserRequest $request, ImageUploadHandler $uploader, User $user)
     {
+        $this->authorize('update', $user);
         // 在 Laravel 中，我们可直接通过 请求对象（Request） 来获取用户上传的文件
         // 第一种方法
         // $file = $request->file('avatar');
