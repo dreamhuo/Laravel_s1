@@ -45,13 +45,19 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
+     * 验证码验证，只需要在注册的时候，添加上表单验证规则
      */
     protected function validator(array $data)
     {
+        // Validator 表单验证的 make() 方法第三个参数是自定义错误提示，这里我们对验证码的错误提示进行自定义
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'captcha' => ['required', 'captcha'],
+        ], [
+            'captcha.required' => '验证码不能为空',
+            'captcha.captcha' => '请输入正确的验证码',
         ]);
     }
 
