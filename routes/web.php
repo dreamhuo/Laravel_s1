@@ -41,7 +41,7 @@ Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit'
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
 // 话题
-Route::resource('topics', 'TopicsController', ['only' => ['index']]);
+Route::resource('topics', 'TopicsController', ['only' => ['index', 'create', 'store']]);
 
 // 分类列表话题路由
 Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
