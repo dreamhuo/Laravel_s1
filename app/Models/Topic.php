@@ -13,11 +13,15 @@ class Topic extends Model
 
     public function category()
     {
+        // 一个话题属于一个分类
+        // 属于 一对一 对应关系，故我们使用 belongsTo() 方法来实现
         return $this->belongsTo(Category::class);
     }
 
     public function user()
     {
+        // 一个话题拥有一个作者
+        // 属于 一对一 对应关系，故我们使用 belongsTo() 方法来实现
         return $this->belongsTo(User::class);
     }
 }
