@@ -40,3 +40,9 @@ Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit'
 // Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
+// 话题
+Route::resource('topics', 'TopicsController', ['only' => ['index']]);
+
+// 分类列表话题路由
+Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
+
