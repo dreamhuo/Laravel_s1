@@ -3,12 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TopicRequest;
-use App\Models\Category;
-use App\Models\User;
 use Auth;
-use App\Handlers\ImageUploadHandler;
-use App\Models\Link;
 class TopicsController extends Controller
 {
     public function __construct()

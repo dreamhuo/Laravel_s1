@@ -23,7 +23,7 @@
   <div id="app" class="{{ route_class() }}-page">
     <!-- 加载顶部导航区块的子模板 -->
     @include('layouts._header')
-    <div class="container">
+    <div class="container mt-5">
       @include('shared._messages')
       <!-- 占位符声明，允许继承此模板的页面注入内容。 -->
       @yield('content')
