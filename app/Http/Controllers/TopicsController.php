@@ -4,6 +4,7 @@ use App\Models\Topic;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TopicRequest;
 use Auth;
 class TopicsController extends Controller
 {
@@ -18,11 +19,27 @@ class TopicsController extends Controller
         return view('topics.index', compact('topics'));
     }
 
+    // 展示页面
+    public function show(Request $request, Topic $topic)
+    {
+        return view('topics.show', compact('topic'));
+    }
 
+    // 创建话题页面
     public function create(Topic $topic)
     {
         // 将所有的分类读取赋值给变量 $categories ，在顶部引入 Category 并传入模板中
         $categories = Category::all();
         return view('topics.create_and_edit', compact('topic', 'categories'));
+    }
+
+    // 存储话题接口
+    public function store(TopicRequest $request, Topic $topic)
+    {
+        $topic->fill($request->all());
+        $topic->user_id = Auth::id();
+        $topic->save();
+
+        return redirect()->route('topics.show', $topic->id)->with('success', '帖子创建成功！');
     }
 }
