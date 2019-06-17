@@ -23,7 +23,7 @@ class TopicsController extends Controller
     }
 
     // 展示页面
-    public function show(Request $request, Topic $topic)
+    public function show(Topic $topic)
     {
         return view('topics.show', compact('topic'));
     }

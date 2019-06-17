@@ -11,13 +11,13 @@
       <div class="card ">
         <div class="card-body">
           <div class="text-center">
-            作者：
+            作者：{{ $topic->user_id }}
           </div>
           <hr>
           <div class="media">
             <div align="center">
-              <a href="">
-                <img class="thumbnail img-fluid" src="" width="300px" height="300px">
+              <a href="{{ route('users.show', $topic->user_id) }}">
+                <img class="thumbnail img-fluid" src="{{ $topic->user }}" width="300px" height="300px">
               </a>
             </div>
           </div>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 topic-content">
-      <div class="card">
+      <div class="card ">
         <div class="card-body">
           <h1 class="text-center mt-3 mb-3">
             {{ $topic->title }}
@@ -43,15 +43,18 @@
             {!! $topic->body !!}
           </div>
 
+          <div class="operate">
+            <hr>
+            <a href="{{ route('topics.show', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
+              <i class="far fa-edit"></i> 编辑
+            </a>
+            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">
+              <i class="far fa-trash-alt"></i> 删除
+            </a>
+          </div>
+
         </div>
       </div>
-
-      {{-- 用户回复列表 --}}
-      <div class="card topic-reply mt-4">
-          <div class="card-body">
-          </div>
-      </div>
-
     </div>
   </div>
 @stop
