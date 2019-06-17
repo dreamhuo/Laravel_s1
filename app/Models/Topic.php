@@ -6,16 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-    /**
-     * 模型的默认属性值。
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'body' => '暂未设置内容…',
-    ];
     protected $fillable = [
         'title', 'body', 'category_id', 'excerpt', 'slug',
+    ];
+    protected $attributes = [
+        'body' => '暂未设置内容…',
     ];
     public function category()
     {
