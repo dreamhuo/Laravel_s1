@@ -42,7 +42,7 @@ class TopicsController extends Controller
     }
 
     // 存储话题接口
-    public function store(TopicRequest $request, Topic $topic)
+    public function store(Request $request, Topic $topic)
     {
         $topic->fill($request->all());
         $topic->user_id = Auth::id();
