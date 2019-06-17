@@ -1,17 +1,16 @@
 <?php
+
 namespace App\Http\Requests;
 
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class TopicRequest extends Request
+class TopicRequest extends FormRequest
 {
     public function rules()
     {
         switch($this->method())
         {
-            // CREATE
             case 'POST':
-            // UPDATE
             case 'PUT':
             case 'PATCH':
             {
@@ -29,6 +28,7 @@ class TopicRequest extends Request
             };
         }
     }
+
     public function messages()
     {
         return [
