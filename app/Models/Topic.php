@@ -18,4 +18,8 @@ class Topic extends Model
         // 属于 一对一 对应关系，故我们使用 belongsTo() 方法来实现
         return $this->belongsTo(Category::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

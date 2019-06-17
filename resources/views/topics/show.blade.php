@@ -11,13 +11,13 @@
       <div class="card ">
         <div class="card-body">
           <div class="text-center">
-            作者：{{ $topic->user_id }}
+            作者：{{ $topic->user->name }}
           </div>
           <hr>
           <div class="media">
             <div align="center">
-              <a href="{{ route('users.show', $topic->user_id) }}">
-                <img class="thumbnail img-fluid" src="{{ $topic->user }}" width="300px" height="300px">
+              <a href="{{ route('users.show', $topic->user->id) }}">
+                <img class="thumbnail img-fluid" src="{{ $topic->user->avatar }}" width="300px" height="300px">
               </a>
             </div>
           </div>
@@ -45,7 +45,7 @@
 
           <div class="operate">
             <hr>
-            <a href="{{ route('topics.show', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
+            <a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
               <i class="far fa-edit"></i> 编辑
             </a>
             <a href="#" class="btn btn-outline-secondary btn-sm" role="button">
