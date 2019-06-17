@@ -44,8 +44,12 @@ class TopicsController extends Controller
     // 存储话题接口
     public function store(Request $request, Topic $topic)
     {
+        //  fill 方法会将传参的键值数组填充到模型的属性中
+        // $request->all() 获取所有用户的请求数据数组，如 ['title' => '标题', 'body' => '内容', ... ]
         $topic->fill($request->all());
+        // Auth::id() 获取到的是当前登录的 ID
         $topic->user_id = Auth::id();
+        // $topic->save() 保存到数据库中
         $topic->save();
         return redirect()->route('topics.show', $topic->id)->with('success', '帖子创建成功！');
     }
