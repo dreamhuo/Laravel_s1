@@ -33,13 +33,20 @@ class TopicsController extends Controller
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
+    // 更新话题接口
+    public function update(TopicRequest $request, Topic $topic)
+    {
+        $this->authorize('update', $topic);
+        $topic->update($request->all());
+        return redirect()->to($topic->link())->with('success', '更新成功！');
+    }
+
     // 存储话题接口
     public function store(TopicRequest $request, Topic $topic)
     {
         $topic->fill($request->all());
         $topic->user_id = Auth::id();
         $topic->save();
-
         return redirect()->route('topics.show', $topic->id)->with('success', '帖子创建成功！');
     }
 }
