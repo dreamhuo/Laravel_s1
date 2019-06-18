@@ -36,6 +36,14 @@ class TopicsController extends Controller
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
+    // 编辑接口
+    public function edit(Topic $topic)
+    {
+        // $this->authorize('update', $topic);
+        $categories = Category::all();
+        return view('topics.create_and_edit', compact('topic', 'categories'));
+    }
+
     // 更新话题接口
     public function update(TopicRequest $request, Topic $topic)
     {
