@@ -43,4 +43,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
+
+    // 一个用户对应多个帖子
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
