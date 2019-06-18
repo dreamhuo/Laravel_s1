@@ -47,6 +47,7 @@ class TopicsController extends Controller
     // 更新话题接口
     public function update(TopicRequest $request, Topic $topic)
     {
+        // authorize 方法会调用 app\Policies\TopicsPolidy.php 里 update 方法，确定是否有权限，没有则调到 403 页面并提示无权限
         $this->authorize('update', $topic);
         $topic->update($request->all());
         return redirect()->route('topics.show', $topic->id)->with('success', '更新成功！');
