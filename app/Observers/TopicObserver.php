@@ -6,7 +6,6 @@ use App\Models\Topic;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
-
 class TopicObserver
 {
     public function saving(Topic $topic)
