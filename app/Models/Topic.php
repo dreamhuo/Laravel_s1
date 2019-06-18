@@ -22,4 +22,10 @@ class Topic extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // 对应多条回复
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }
