@@ -71,4 +71,14 @@ class User extends Authenticatable implements MustVerifyEmailContract
         }
         $this->laravelNotify($instance);
     }
+
+    // 清空消息
+    public function markAsRead()
+    {
+        // 保存数据库
+        $this->notification_count = 0;
+        $this->save();
+        // 清空缓存
+        $this->unreadNotifications->markAsRead();
+    }
 }
