@@ -4,6 +4,7 @@ namespace App\Models;
 // 消息通知相关功能引用
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
+use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 // 是授权相关功能的引用
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +15,8 @@ use Auth;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-class User extends Authenticatable
+// class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmailContract
 {
     use MustVerifyEmailTrait;
 
