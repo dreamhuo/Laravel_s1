@@ -51,4 +51,7 @@ Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 // 上传图片
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
 
+// 通知列表
+Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
+
 
