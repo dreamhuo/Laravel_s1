@@ -9,12 +9,17 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 // 是授权相关功能的引用
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Spatie\Permission\Traits\HasRoles;
+
 use Illuminate\Support\Str;
 use Auth;
 
 // class User extends Authenticatable
 class User extends Authenticatable implements MustVerifyEmailContract
 {
+    // 获取到扩展包提供的所有权限和角色的操作方法
+    use HasRoles;
+
     use MustVerifyEmailTrait;
 
     use Notifiable {
