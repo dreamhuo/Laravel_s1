@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 20/06/2019 11:33:45
+ Date: 20/06/2019 13:56:32
 */
 
 SET NAMES utf8mb4;
@@ -38,65 +38,28 @@ INSERT INTO `categories` VALUES (3, '问答', '请保持友善，互帮互助', 
 INSERT INTO `categories` VALUES (4, '公告', '站点公告', 0);
 
 -- ----------------------------
--- Table structure for migrations
--- ----------------------------
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for model_has_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `model_has_permissions`;
 CREATE TABLE `model_has_permissions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `activation_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_at` timestamp(0) DEFAULT NULL,
-  `updated_at` timestamp(0) DEFAULT NULL,
-  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `introduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `notification_count` bigint(20) DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of model_has_permissions
--- ----------------------------
-INSERT INTO `model_has_permissions` VALUES (2, 'fdsa', 'fdsa@fdsa.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', 'Zi6HyyzU66', '2019-06-12 17:11:47', '2019-06-12 17:11:47', NULL, NULL, 0);
-INSERT INTO `model_has_permissions` VALUES (3, 'tospur_pc', 'huo8008@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', '2qwDQD53x1', '2019-06-13 10:38:39', '2019-06-19 14:34:33', 'http://localhost:8082/uploads/images/avatars/201906/13/3_1560412735_CgHBdMJc2b.jpg', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', 0);
-INSERT INTO `model_has_permissions` VALUES (4, 'dDDsss', 'huo8009@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23', NULL, NULL, 0);
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`, `model_id`, `model_type`) USING BTREE,
+  INDEX `model_has_permissions_model_id_model_type_index`(`model_id`, `model_type`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for model_has_roles
 -- ----------------------------
 DROP TABLE IF EXISTS `model_has_roles`;
 CREATE TABLE `model_has_roles`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `activation_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_at` timestamp(0) DEFAULT NULL,
-  `updated_at` timestamp(0) DEFAULT NULL,
-  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `introduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `notification_count` bigint(20) DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of model_has_roles
--- ----------------------------
-INSERT INTO `model_has_roles` VALUES (2, 'fdsa', 'fdsa@fdsa.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', 'Zi6HyyzU66', '2019-06-12 17:11:47', '2019-06-12 17:11:47', NULL, NULL, 0);
-INSERT INTO `model_has_roles` VALUES (3, 'tospur_pc', 'huo8008@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', '2qwDQD53x1', '2019-06-13 10:38:39', '2019-06-19 14:34:33', 'http://localhost:8082/uploads/images/avatars/201906/13/3_1560412735_CgHBdMJc2b.jpg', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', 0);
-INSERT INTO `model_has_roles` VALUES (4, 'dDDsss', 'huo8009@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23', NULL, NULL, 0);
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`role_id`, `model_id`, `model_type`) USING BTREE,
+  INDEX `model_has_roles_model_id_model_type_index`(`model_id`, `model_type`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for notifications
@@ -131,20 +94,13 @@ INSERT INTO `notifications` VALUES ('ee903242-4eef-474a-aa28-24e6fc442ad7', 'App
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of permissions
--- ----------------------------
-INSERT INTO `permissions` VALUES (2, 'fdsa', NULL, '2019-06-12 17:11:47', '2019-06-12 17:11:47');
-INSERT INTO `permissions` VALUES (3, 'tospur_pc', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', '2019-06-13 10:38:39', '2019-06-19 14:34:33');
-INSERT INTO `permissions` VALUES (4, 'dDDsss', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23');
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for replies
@@ -174,45 +130,24 @@ INSERT INTO `replies` VALUES (19, 3, 53, '魂牵梦萦要城', '2019-06-18 15:35
 -- ----------------------------
 DROP TABLE IF EXISTS `role_has_permissions`;
 CREATE TABLE `role_has_permissions`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `password` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `activation_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `created_at` timestamp(0) DEFAULT NULL,
-  `updated_at` timestamp(0) DEFAULT NULL,
-  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `introduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `notification_count` bigint(20) DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of role_has_permissions
--- ----------------------------
-INSERT INTO `role_has_permissions` VALUES (2, 'fdsa', 'fdsa@fdsa.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', 'Zi6HyyzU66', '2019-06-12 17:11:47', '2019-06-12 17:11:47', NULL, NULL, 0);
-INSERT INTO `role_has_permissions` VALUES (3, 'tospur_pc', 'huo8008@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', '2qwDQD53x1', '2019-06-13 10:38:39', '2019-06-19 14:34:33', 'http://localhost:8082/uploads/images/avatars/201906/13/3_1560412735_CgHBdMJc2b.jpg', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', 0);
-INSERT INTO `role_has_permissions` VALUES (4, 'dDDsss', 'huo8009@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23', NULL, NULL, 0);
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`, `role_id`) USING BTREE,
+  INDEX `role_has_permissions_role_id_foreign`(`role_id`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Table structure for roles
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `guard_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of roles
--- ----------------------------
-INSERT INTO `roles` VALUES (2, 'fdsa', NULL, '2019-06-12 17:11:47', '2019-06-12 17:11:47');
-INSERT INTO `roles` VALUES (3, 'tospur_pc', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', '2019-06-13 10:38:39', '2019-06-19 14:34:33');
-INSERT INTO `roles` VALUES (4, 'dDDsss', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23');
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for topics
