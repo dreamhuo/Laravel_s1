@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 20/06/2019 13:56:32
+ Date: 21/06/2019 10:25:58
 */
 
 SET NAMES utf8mb4;
@@ -100,7 +100,14 @@ CREATE TABLE `permissions`  (
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
+INSERT INTO `permissions` VALUES (1, 'manage_contents', '11', '2019-06-18 15:35:03', '2019-06-18 15:35:03');
+INSERT INTO `permissions` VALUES (2, 'manage_users', '22', '2019-06-20 14:23:55', '2019-06-20 14:23:58');
+INSERT INTO `permissions` VALUES (3, 'edit_settings', '33', '2019-06-20 14:24:17', '2019-06-20 14:24:19');
 
 -- ----------------------------
 -- Table structure for replies
@@ -147,7 +154,13 @@ CREATE TABLE `roles`  (
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+INSERT INTO `roles` VALUES (1, 'Founder', 'manage_contents,manage_users,edit_settings', '2019-06-20 14:27:41', '2019-06-20 14:27:45');
+INSERT INTO `roles` VALUES (2, 'Maintainer', 'manage_contents', '2019-06-20 14:28:05', '2019-06-20 14:28:07');
 
 -- ----------------------------
 -- Table structure for topics

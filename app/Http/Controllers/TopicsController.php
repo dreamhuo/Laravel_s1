@@ -9,6 +9,9 @@ use Auth;
 
 use App\Handlers\ImageUploadHandler;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class TopicsController extends Controller
 {
     public function __construct()
@@ -26,6 +29,9 @@ class TopicsController extends Controller
     // 展示页面
     public function show(Topic $topic)
     {
+        $log = new Logger('register');
+        $log->pushHandler(new StreamHandler(storage_path('logs/guard.log'),Logger::INFO) );
+        $log->addInfo('auth.defaults.guard:'.Auth.defaults.guard);
         return view('topics.show', compact('topic'));
     }
 

@@ -18,6 +18,12 @@ use Auth;
 class User extends Authenticatable implements MustVerifyEmailContract
 {
     // 获取到扩展包提供的所有权限和角色的操作方法
+    // new一个 UserModel 对象,这些方法都可以使用了，
+    // 1. user−>assignRole(‘writer′); 2.user->removeRole(‘writer’);
+    // 3. user−>syncRoles(params);（这个方法我个人比较喜欢，当我们改变一个user的角色时候，用它最好不过了，它会把本来有的角色给你取消，然后赋予新的角色，这样特别省事，还能一次赋予好几个角色）
+    // 4. role->givePermissionTo(‘edit articles’);
+    // 5. role−>revokePermissionTo(‘editarticles′);
+    // 6. role−>revokePermissionTo(‘editarticles′);     6.role->syncPermissions(params);
     use HasRoles;
 
     use MustVerifyEmailTrait;
