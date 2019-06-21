@@ -32,6 +32,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
         notify as protected laravelNotify;
     }
 
+    // guard_name 为权限守卫，只有权限表里 guard_name 为 admin 的，才能被用户用来附值
+    protected $guard_name = 'admin';
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.

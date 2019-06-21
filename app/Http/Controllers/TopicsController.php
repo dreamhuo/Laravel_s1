@@ -31,7 +31,7 @@ class TopicsController extends Controller
     {
         $log = new Logger('register');
         $log->pushHandler(new StreamHandler(storage_path('logs/guard.log'),Logger::INFO) );
-        $log->addInfo('auth.defaults.guard:'.Auth.defaults.guard);
+        $log->addInfo('Auth');
         return view('topics.show', compact('topic'));
     }
 

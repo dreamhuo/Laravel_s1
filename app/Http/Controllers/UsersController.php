@@ -7,6 +7,13 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Handlers\ImageUploadHandler;
 
+// 权限编辑
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 class UsersController extends Controller
 {
     public function __construct()
@@ -27,6 +34,28 @@ class UsersController extends Controller
     // 当请求 http://larabbs.test/users/1 并且满足以上两个条件时，Laravel 将会自动查找 ID 为 1 的用户并赋值到变量 $user 中，如果数据库中找不到对应的模型实例，会自动生成 HTTP 404 响应
     public function show(User $user)
     {
+        // 新建角色
+        // Role::create(['guard_name' => 'admin', 'name' => 'superadmin']);
+
+        // 新建权限
+        // Permission::create(['guard_name' => 'admin', 'name' => 'publish articles']);
+
+        // 给用户添加一个权限
+        // $user->givePermissionTo('publish articles');
+
+        // 通过角色添加权限。
+        // $user->assignRole('superadmin');
+
+        $log = new Logger('register');
+        $log->pushHandler(new StreamHandler(storage_path('logs/assignRole.log'),Logger::INFO) );
+        $log->addInfo('当前用户所有权限:'.$user->permissions);
+        $log->addInfo('角色所继承的权限:'.$user->getAllPermissions());
+        $log->addInfo('所有已定义的角色的集合:'.$user->getRoleNames());
+
+        // $users = User::role('writer')->get(); // 返回角色是 'writer' 的用户
+
+        $log->addInfo('是否有权限:'.$user->can('edit articles'));
+
         // 将用户对象变量 $user 通过 compact 方法转化为一个关联数组
         // 并作为第二个参数传递给 view 方法，将变量数据传递到视图中
         return view('users.show', compact('user'));
