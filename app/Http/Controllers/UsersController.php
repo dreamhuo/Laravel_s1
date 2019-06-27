@@ -74,10 +74,18 @@ class UsersController extends Controller
         // $users = User::role('writer')->get();                // 返回角色是 'writer' 的用户
         // $users = User::permission('edit articles')->get();   // 只返回有 'edit articles' 权限的用户 （继承角色得来的或者是直接分配的）
 
-        // ==============判断权限===============
+        // ==============判断用户权限===============
         // $user->hasPermissionTo('edit articles');                                                  // 判断用户是否具有这个权限
         // $user->hasAnyPermission(['edit articles', 'publish articles', 'unpublish articles']);     // 判断用户是否具有多个权限
+        // $user->hasRole('writer');                                                                 // 你可以判断一个用户是否包含某个角色
+        // $user->hasAnyRole(Role::all());                            // 你也可以判断一个用户是否包含给定角色列表中的一个
+        // $user->hasAllRoles(Role::all());                           // 判断一个用户是否包含所有给定的角色
 
+        // =============判断角色权限=================
+        // $role->hasPermissionTo('edit articles');             // 可以判断一个角色是否包含某个权限
+        // $role->revokePermissionTo('edit articles');          // 权限也可以从一个角色身上移除
+
+        //原文地址 https://learnku.com/laravel/t/8018/extension-recommendation-role-and-authority-control-in-spatielaravel-permission-laravel-applications
 
 
         // 通过角色添加权限。
