@@ -34,25 +34,47 @@ class UsersController extends Controller
     // 当请求 http://larabbs.test/users/1 并且满足以上两个条件时，Laravel 将会自动查找 ID 为 1 的用户并赋值到变量 $user 中，如果数据库中找不到对应的模型实例，会自动生成 HTTP 404 响应
     public function show(User $user)
     {
-        // 新建角色
-        // Role::create(['guard_name' => 'admin', 'name' => 'superadmin']);
+        // =========新建角色=========
+        // $role = Role::create(['guard_name' => 'admin', 'name' => 'superadmin']);
 
-        // 新建权限
-        // Permission::create(['guard_name' => 'admin', 'name' => 'publish articles']);
+        // =======新建权限=========
+        // $permission = Permission::create(['guard_name' => 'admin', 'name' => '编辑文章']);
 
-        // 给用户添加一个权限
-        // $user->givePermissionTo('publish articles');
+        // =========把权限分配给角色=========
+        // ###通过 $role->givePermissionTo 方法
+        // $role->givePermissionTo($permission);                          // 直接传权限实例
+        // $role->syncPermissions($permissions);                          // 将多个权限同步赋予到一个角色
+        // $role->givePermissionTo('edit articles', 'delete articles');   // 传权限字符串
+        // $role->givePermissionTo(['edit articles', 'delete articles']); // 传权限数组
+        // ###通过 $permission->assignRole 方法
+        // $permission->assignRole($role);                                // 直接传权限实例
+        // $permission->syncRoles($roles);                                // 将多个权限同步赋予到一个角色
+        // $permission->assignRole('edit articles', 'delete articles');   // 传权限字符串
+        // $permission->assignRole(['edit articles', 'delete articles']); // 传权限数组
 
         // 通过角色添加权限。
         // $user->assignRole('superadmin');
 
         $log = new Logger('register');
         $log->pushHandler(new StreamHandler(storage_path('logs/assignRole.log'),Logger::INFO) );
-        $log->addInfo('当前用户所有权限:'.$user->permissions);
-        $log->addInfo('角色所继承的权限:'.$user->getAllPermissions());
-        $log->addInfo('所有已定义的角色的集合:'.$user->getRoleNames());
+        // $log->addInfo('当前用户所有权限:'.$user->permissions);
+        // $log->addInfo('角色所继承的权限:'.$user->getAllPermissions());
+        // $log->addInfo('所有已定义的角色的集合:'.$user->getRoleNames());
+        $log->addInfo('是有这个权限:'.$user->hasPermissionTo('publish'));
 
         // $users = User::role('writer')->get(); // 返回角色是 'writer' 的用户
+
+        // $users = User::permission('edit articles')->get(); // 只返回有 'edit articles' 权限的用户 （继承角色得来的或者是直接分配的）
+
+        // 撤销用户的某个权限：
+        // $user->revokePermissionTo('edit articles');
+
+        // 判断某个用户是否具有这个权限
+        // $user->hasPermissionTo('edit articles');
+
+
+
+
 
         $log->addInfo('是否有权限:'.$user->can('edit articles'));
 
