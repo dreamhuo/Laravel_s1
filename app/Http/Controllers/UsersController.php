@@ -43,7 +43,7 @@ class UsersController extends Controller
         // =========把权限分配给角色=========
         // ###通过 $role->givePermissionTo 方法
         // $role->givePermissionTo($permission);                          // 直接传权限实例
-        // $role->syncPermissions($permissions);                          // 将多个权限同步赋予到一个角色
+        // $role->syncPermissions($permissions);                          // 移除所有权限，将多个权限同步赋予到一个角色
         // $role->givePermissionTo('edit articles', 'delete articles');   // 传权限字符串
         // $role->givePermissionTo(['edit articles', 'delete articles']); // 传权限数组
         // ###通过 $permission->assignRole 方法
@@ -51,6 +51,34 @@ class UsersController extends Controller
         // $permission->syncRoles($roles);                                // 将多个权限同步赋予到一个角色
         // $permission->assignRole('edit articles', 'delete articles');   // 传权限字符串
         // $permission->assignRole(['edit articles', 'delete articles']); // 传权限数组
+
+        // ===========通过角色去删除权限==========
+        // $role->revokePermissionTo($permission);   // 通过角色方法删除权限
+        // $permission->removeRole($role);           // 通过权限方法删除角色的权限
+
+        // ===============把权限分配给用户==============
+        // $user->givePermissionTo('edit articles');
+        // $user->givePermissionTo('edit articles', 'delete articles');
+        // $user->givePermissionTo(['edit articles', 'delete articles']);
+
+        // ==============删除用户权限==================
+        // $user->revokePermissionTo('edit articles');                          // 撤销用户的某个权限
+        // $user->syncPermissions(['edit articles', 'delete articles']);        // 移除所有权限，将多个权限同步赋予到一个用户
+
+        // ============获取权限================
+        // $permissions = $user->permissions;           // 获取 【直接分配】 给用户的所有的权限
+        // $permissions = $user->getAllPermissions();   // 返回 【所有】 用户通过赋予角色所继承的权限
+        // $roles = $user->getRoleNames();              // 获取所有已定义的角色的集合
+
+        // =============查询用户=================
+        // $users = User::role('writer')->get();                // 返回角色是 'writer' 的用户
+        // $users = User::permission('edit articles')->get();   // 只返回有 'edit articles' 权限的用户 （继承角色得来的或者是直接分配的）
+
+        // ==============判断权限===============
+        // $user->hasPermissionTo('edit articles');                                                  // 判断用户是否具有这个权限
+        // $user->hasAnyPermission(['edit articles', 'publish articles', 'unpublish articles']);     // 判断用户是否具有多个权限
+
+
 
         // 通过角色添加权限。
         // $user->assignRole('superadmin');
@@ -60,7 +88,8 @@ class UsersController extends Controller
         // $log->addInfo('当前用户所有权限:'.$user->permissions);
         // $log->addInfo('角色所继承的权限:'.$user->getAllPermissions());
         // $log->addInfo('所有已定义的角色的集合:'.$user->getRoleNames());
-        $log->addInfo('是有这个权限:'.$user->hasPermissionTo('publish'));
+        // $log->addInfo('是有这个权限:'.$user->hasPermissionTo('publish'));
+        $log->addInfo('用户所属角色:'.$user->getRoleNames());
 
         // $users = User::role('writer')->get(); // 返回角色是 'writer' 的用户
 
