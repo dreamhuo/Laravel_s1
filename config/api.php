@@ -36,7 +36,7 @@ return [
     | Accept: application/prs.larabbs.v2+json
     */
 
-    'subtype' => 'larabbs',
+    'subtype' => 'dw',
 
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
     |
     */
 
-    'version' => env('API_VERSION', 'v1'),
+    'version' => 'v1',
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
 
     // 'domain' => env('API_DOMAIN', null),
     // 'domain' => 'localhost:8082',
-    'domain' => env('API_DOMAIN', null),
+    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'name' => env('API_NAME', null),
+    'name' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -103,7 +103,7 @@ return [
     |
     */
 
-    'conditionalRequest' => env('API_CONDITIONAL_REQUEST', true),
+    'conditionalRequest' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -116,7 +116,7 @@ return [
     |
     */
 
-    'strict' => env('API_STRICT', false),
+    'strict' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -219,7 +219,8 @@ return [
     |
     */
 
-    'defaultFormat' => env('API_DEFAULT_FORMAT', 'json'),
+    // 'defaultFormat' => env('API_DEFAULT_FORMAT', 'json'),
+    'defaultFormat' => 'json',
 
     'formats' => [
 
