@@ -36,7 +36,7 @@ return [
     | Accept: application/prs.larabbs.v2+json
     */
 
-    'subtype' => 'dw',
+    'subtype' => 'larabbs',
 
     /*
     |--------------------------------------------------------------------------

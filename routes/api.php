@@ -21,17 +21,17 @@ $api = app('Dingo\Api\Routing\Router');
 // $api->get('version', function() {
 //     return response('this is version v1');
 // });
-// $api->version('v1', function($api) {
-//     $api->get('version', function() {
-//         return response('this is version v1');
-//     });
-// });
+$api->version('v1', function($api) {
+    $api->get('version', function() {
+        return response('this is version v1');
+    });
+});
 
-// $api->version('v2', function($api) {
-//     $api->get('version', function() {
-//         return response('this is version v2');
-//     });
-// });
+$api->version('v2', function($api) {
+    $api->get('version', function() {
+        return response('this is version v2');
+    });
+});
 
 // 使 v1 版本的路由都会指向 App\Http\Controllers\Api
 // $api->version('v1', [
@@ -44,8 +44,8 @@ $api = app('Dingo\Api\Routing\Router');
 //     });
 // });
 
-$api->version('v1', function($api) {
-    $api->get('test', function(){
-        return 'hello';
-    });
-});
+// $api->version('v1', function($api) {
+//     $api->get('test', function(){
+//         return 'hello';
+//     });
+// });
