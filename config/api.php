@@ -74,8 +74,8 @@ return [
     |
     */
 
-    'domain' => env('API_DOMAIN', null),
-    // 'domain' => 'api.larabbs.com',
+    // 'domain' => env('API_DOMAIN', null),
+    'domain' => 'localhost:8082',
 
     /*
     |--------------------------------------------------------------------------
