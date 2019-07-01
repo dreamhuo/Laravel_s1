@@ -2,29 +2,20 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
+//  FormRequest 是 DingoApi 为我们提供的基类。
+use Dingo\Api\Http\FormRequest;
 
 class VerificationCodeRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
+        // 必须提交 phone 参数，必须是一个合法的电话格式，而且该手机号未注册过
         return [
-            //
+            'phone' => [
+                'required',
+                'regex:/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199)\d{8}$/',
+                'unique:users'
+            ]
         ];
     }
 }
