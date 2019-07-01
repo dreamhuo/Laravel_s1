@@ -75,7 +75,8 @@ return [
     */
 
     // 'domain' => env('API_DOMAIN', null),
-    'domain' => 'localhost:8082',
+    // 'domain' => 'localhost:8082',
+    'domain' => env('API_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
