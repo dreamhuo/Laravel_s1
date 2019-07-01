@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Api;
 
-//  FormRequest 是 DingoApi 为我们提供的基类。
 class VerificationCodeRequest extends FormRequest
 {
     public function rules()
