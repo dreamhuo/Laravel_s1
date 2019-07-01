@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'standardsTree' => env('API_STANDARDS_TREE', 'x'),
+    'standardsTree' => 'prs',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,9 +30,13 @@ return [
     |
     | For example: Accept: application/x.SUBTYPE.v1+json
     |
+    | 访问 v1 版本
+    | Accept: application/prs.larabbs.v1+json
+    | 访问 v2 版本
+    | Accept: application/prs.larabbs.v2+json
     */
 
-    'subtype' => env('API_SUBTYPE', ''),
+    'subtype' => 'larabbs',
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +61,7 @@ return [
     |
     */
 
-    'prefix' => env('API_PREFIX', null),
+    'prefix' => 'api',
 
     /*
     |--------------------------------------------------------------------------
@@ -66,10 +70,12 @@ return [
     |
     | A default domain to use for your API routes so you don't have to
     | specify it for each group.
+    | 注意：前缀和子域名，两者有且只有一个
     |
     */
 
     'domain' => env('API_DOMAIN', null),
+    // 'domain' => 'api.larabbs.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +128,8 @@ return [
     |
     */
 
-    'debug' => env('API_DEBUG', false),
+    // 'debug' => env('API_DEBUG', false),
+    'debug' => true,
 
     /*
     |--------------------------------------------------------------------------
