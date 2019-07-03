@@ -30,6 +30,7 @@ class VerificationCodesController extends Controller
         // 将 key 以及 过期时间 返回给客户端
         return $this->response->array([
             'key' => $key,
+            'code' => $code,
             'expired_at' => $expiredAt->toDateTimeString(),
         ])->setStatusCode(201);
     }
