@@ -37,12 +37,19 @@ $api->version('v2', function($api) {
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api'
 ], function($api) {
-    // 短信验证码
-    $api->post('verificationCodes', 'VerificationCodesController@store')
-        -> name('api.verificationCodes.store');
-    // 用户注册
-    $api->post('users', 'UsersController@store')
-        ->name('api.users.store');
+    // 通过中间件 api.throttle 设置接口调用限制，限定为 1 分钟 1 次，
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => 1,
+        'expires' => 1,
+    ], function($api) {
+        // 短信验证码
+        $api->post('verificationCodes', 'VerificationCodesController@store')
+            -> name('api.verificationCodes.store');
+        // 用户注册
+        $api->post('users', 'UsersController@store')
+            ->name('api.users.store');
+    });
     // 测试接口
     $api->get('version', function() {
         return response('这是 version v1');
