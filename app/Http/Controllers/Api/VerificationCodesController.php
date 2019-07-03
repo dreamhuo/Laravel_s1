@@ -17,6 +17,20 @@ class VerificationCodesController extends Controller
         //     'key' => Cache::get('verificationCode_TRxxArRgY9IIswE')
         // ]);
 
+         $captchaData = Cache::get($request->captcha_key);
+         // 验证图片验证码是否失效
+        if (!$captchaData) {
+            return $this->response->error('图片验证码已失效', 422);
+        }
+        // 判断图片验证码是否正确
+        if (!hash_equals($captchaData['code'], $request->captcha_code)) {
+            // 验证错误就清除缓存
+            Cache::forget($request->captcha_key);
+            return $this->response->errorUnauthorized('验证码错误');
+        }
+
+        $phone = $captchaData['phone'];
+
         // 生成4位随机数，左侧补0
         $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
 
