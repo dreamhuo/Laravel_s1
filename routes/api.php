@@ -67,6 +67,10 @@ $api->version('v1', [
         });
     });
 
+    // 登录
+    $api->post('authorizations', 'AuthorizationsController@store')
+        ->name('api.authorizations.store');
+
     // 图片验证码
     $api->post('captchas', 'CaptchasController@store')
         ->name('api.captchas.store');
