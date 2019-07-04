@@ -40,7 +40,7 @@ $api->version('v1', [
     // 通过中间件 api.throttle 设置接口调用限制，限定为 1 分钟 1 次，
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 1,
+        'limit' => 10,
         'expires' => 1,
     ], function($api) {
         // 短信验证码
@@ -49,6 +49,22 @@ $api->version('v1', [
         // 用户注册
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
+    });
+
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => 60,
+        'expires' => 1,
+    ], function ($api) {
+        // 游客可以访问的接口
+
+        // 需要 token 验证的接口
+        // DingoApi 为我们准备好了 api.auth 中间件，用来区分哪些接口需要验证 token
+        $api->group(['middleware' => 'api.auth'], function($api) {
+            // 当前登录用户信息
+            $api->get('user', 'UsersController@me')
+                ->name('api.user.show');
+        });
     });
 
     // 图片验证码
