@@ -14,8 +14,11 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 use Auth;
 
+// JWTSubject
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 // class User extends Authenticatable
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
 {
     // 获取到扩展包提供的所有权限和角色的操作方法
     // new一个 UserModel 对象,这些方法都可以使用了，
@@ -93,5 +96,16 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->save();
         // 清空缓存
         $this->unreadNotifications->markAsRead();
+    }
+
+    // getJWTIdentifier 返回了 User 的 id
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    // getJWTCustomClaims 是我们需要额外再 JWT 载荷中增加的自定义内容，这里返回空数组
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
