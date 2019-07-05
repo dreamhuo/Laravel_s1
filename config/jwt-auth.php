@@ -100,7 +100,7 @@ return [
     | Notice: If you set this to null you should remove 'exp' element from 'required_claims' list.
     |
     */
-
+    // JWT_TTL 生成的 token 在多少分钟后过期，默认 60 分钟
     'ttl' => env('JWT_TTL', 60),
 
     /*
@@ -119,7 +119,7 @@ return [
     | systems in place to revoke the token if necessary.
     |
     */
-
+    // JWT_REFRESH_TTL 生成的 token，在多少分钟内，可以刷新获取一个新 token，默认 20160 分钟，14 天。
     'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
 
     /*
