@@ -23,10 +23,22 @@ class AuthorizationsController extends Controller
         }
 
         // 通过 Auth::guard('api')->factory()->getTTL() 获取过期时间
+        // 最后返回 token 信息及过期时间 expires_in，单位是秒
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
         ])->setStatusCode(201);
+    }
+    public function update()
+    {
+        $token = Auth::guard('api')->refresh();
+        return $this->respondWithToken($token);
+    }
+
+    public function destroy()
+    {
+        Auth::guard('api')->logout();
+        return $this->response->noContent();
     }
 }
