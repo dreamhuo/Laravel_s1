@@ -30,15 +30,41 @@ class AuthorizationsController extends Controller
             'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
         ])->setStatusCode(201);
     }
+
+    // update 和 destroy 两个方法我们都需要提交当前的 token，正确的提交方式是在增加 Authorization Header
+    // 参数示例（Bearer需要加一个空格）： Authorization: Bearer {token}
+    /**
+     * Refresh a token.
+     * 刷新token，如果开启黑名单，以前的token便会失效。
+     * 值得注意的是用上面的getToken再获取一次Token并不算做刷新，两次获得的Token是并行的，即两个都可用。
+     *  \Illuminate\Http\JsonResponse
+    */
+
     public function update()
     {
-        $token = Auth::guard('api')->refresh();
+        $token = \Auth::guard('api')->refresh();
         return $this->respondWithToken($token);
     }
 
     public function destroy()
     {
-        Auth::guard('api')->logout();
+        \Auth::guard('api')->logout();
         return $this->response->noContent();
     }
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
+    }
+
 }
