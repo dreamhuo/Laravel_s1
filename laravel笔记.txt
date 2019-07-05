@@ -1,39 +1,42 @@
-µ±ĞÂÔöÎÄ¼şºó£¬ÔËĞĞÖØĞÂ¼ÓÔØPHPÒÀÀµ
+ï»¿å½“æ–°å¢æ–‡ä»¶åï¼Œè¿è¡Œé‡æ–°åŠ è½½PHPä¾èµ–
 composer dumpautoload
 
-ÈÕÖ¾Éú³É
+æ—¥å¿—ç”Ÿæˆ
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 $log = new Logger('register');
 $log->pushHandler(new StreamHandler(storage_path('logs/reg_test.log'),Logger::INFO) );
-$log->addInfo('ÓÃ»§×¢²áĞÅÏ¢1:'.$topic->excerpt);
+$log->addInfo('ç”¨æˆ·æ³¨å†Œä¿¡æ¯1:'.$topic->excerpt);
 
-Ò³Ãæ´òÓ¡Ê¾Àı
+é¡µé¢æ‰“å°ç¤ºä¾‹
 {{dd($topics)}}
 
-Îª Models Ìí¼ÓÒ»¸ö Observers
-ĞèÒªÔÚ Providers\AppServiceProvider.php µÄ boot ÖĞ×¢²á
+ä¸º Models æ·»åŠ ä¸€ä¸ª Observers
+éœ€è¦åœ¨ Providers\AppServiceProvider.php çš„ boot ä¸­æ³¨å†Œ
 \App\Models\Reply::observe(\App\Observers\ReplyObserver::class); 
 
-Çå³ıÂ·ÓÉ»º´æ
+æ¸…é™¤è·¯ç”±ç¼“å­˜
 php artisan route:clear
 
-µ÷ÓÃ ÅäÖÃ Àï·½·¨ 
+è°ƒç”¨ é…ç½® é‡Œæ–¹æ³• 
 config('api.rate_limits.sign.limit')
-api¼´ api.php ÀïµÄ  rate_limits.sign.limit ¶ÔÏóÔªËØ¼üÖµ¶Ô
+apiå³ api.php é‡Œçš„  rate_limits.sign.limit å¯¹è±¡å…ƒç´ é”®å€¼å¯¹
 
-ÅĞ¶Ïµ±Ç°»·¾³
-app()->environment('production')  Îª true ¼´Îª Éú²ú»·¾³
+åˆ¤æ–­å½“å‰ç¯å¢ƒ
+app()->environment('production')  ä¸º true å³ä¸º ç”Ÿäº§ç¯å¢ƒ
 
-³£ÓÃ×é¼ş
-1£©Í¼Æ¬ÑéÖ¤Âë£º
+å¸¸ç”¨ç»„ä»¶
+1ï¼‰å›¾ç‰‡éªŒè¯ç ï¼š
      $ composer require gregwar/captcha
-2£©RestFul ¹¤¾ß°ü DingoApi£º
+2ï¼‰RestFul å·¥å…·åŒ… DingoApiï¼š
      $ composer require dingo/api
-3£©jwt×é¼ş£º
+3ï¼‰jwtç»„ä»¶ï¼š
      $ composer require tymon/jwt-auth:1.0.0-rc.4.1
-4£©¶ÌĞÅ·¢ËÍ×é¼ş£º
+4ï¼‰çŸ­ä¿¡å‘é€ç»„ä»¶ï¼š
      $ composer require "overtrue/easy-sms"
+
+é˜¿é‡Œé•œåƒï¼š
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 
 
