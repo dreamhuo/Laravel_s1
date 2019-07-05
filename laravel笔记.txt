@@ -1,0 +1,41 @@
+当新增文件后，运行重新加载PHP依赖
+composer dumpautoload
+
+日志生成
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+$log = new Logger('register');
+$log->pushHandler(new StreamHandler(storage_path('logs/reg_test.log'),Logger::INFO) );
+$log->addInfo('用户注册信息1:'.$topic->excerpt);
+
+页面打印示例
+{{dd($topics)}}
+
+为 Models 添加一个 Observers
+需要在 Providers\AppServiceProvider.php 的 boot 中注册
+\App\Models\Reply::observe(\App\Observers\ReplyObserver::class); 
+
+清除路由缓存
+php artisan route:clear
+
+调用 配置 里方法 
+config('api.rate_limits.sign.limit')
+api即 api.php 里的  rate_limits.sign.limit 对象元素键值对
+
+判断当前环境
+app()->environment('production')  为 true 即为 生产环境
+
+常用组件
+1）图片验证码：
+     $ composer require gregwar/captcha
+2）RestFul 工具包 DingoApi：
+     $ composer require dingo/api
+3）jwt组件：
+     $ composer require tymon/jwt-auth:1.0.0-rc.4.1
+4）短信发送组件：
+     $ composer require "overtrue/easy-sms"
+
+
+
+
+

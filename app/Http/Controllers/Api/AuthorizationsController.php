@@ -37,7 +37,6 @@ class AuthorizationsController extends Controller
      * Refresh a token.
      * 刷新token，如果开启黑名单，以前的token便会失效。
      * 值得注意的是用上面的getToken再获取一次Token并不算做刷新，两次获得的Token是并行的，即两个都可用。
-     *  \Illuminate\Http\JsonResponse
     */
 
     public function update()
@@ -49,7 +48,10 @@ class AuthorizationsController extends Controller
     public function destroy()
     {
         \Auth::guard('api')->logout();
-        return $this->response->noContent();
+        // return $this->response->noContent();
+        return $this->response->array([
+            'message' => '销毁token成功！',
+        ])->setStatusCode(200);
     }
     /**
      * Get the token array structure.
