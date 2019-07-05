@@ -8,7 +8,7 @@ use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\UserRequest;
 use Illuminate\Support\Facades\Cache;
 
-class UsersController extends Controller
+class UsersInfoController extends Controller
 {
     public function store(UserRequest $request)
     {

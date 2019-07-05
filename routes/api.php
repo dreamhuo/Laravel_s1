@@ -47,7 +47,7 @@ $api->version('v1', [
         $api->post('verificationCodes', 'VerificationCodesController@store')
             -> name('api.verificationCodes.store');
         // 用户注册
-        $api->post('users', 'UsersController@store')
+        $api->post('users', 'UsersInfoController@store')
             ->name('api.users.store');
     });
 
@@ -62,7 +62,7 @@ $api->version('v1', [
         // DingoApi 为我们准备好了 api.auth 中间件，用来区分哪些接口需要验证 token
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 当前登录用户信息
-            $api->get('user', 'UsersController@me')
+            $api->get('user', 'UsersInfoController@me')
                 ->name('api.user.show');
         });
     });
