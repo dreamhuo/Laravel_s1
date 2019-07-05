@@ -48,6 +48,10 @@ class UsersController extends Controller
 
     public function me()
     {
+        // Dingo\Api\Routing\Helpers ，提供了 user 方法，方便我们获取到当前登录的用户
+        // 也就是 token 所对应的用户，$this->user() 等同于 \Auth::guard('api')->user()
+        // 返回的是一个单一资源，所以使用 $this->response->item
+        // 第一个参数是模型实例，第二个参数是刚刚创建的 transformer
         return $this->response->item(
             $this->user(),
             new UserTransformer()
