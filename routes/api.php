@@ -35,7 +35,8 @@ $api->version('v2', function($api) {
 
 // 使 v1 版本的路由都会指向 App\Http\Controllers\Api
 $api->version('v1', [
-    'namespace' => 'App\Http\Controllers\Api'
+    'namespace' => 'App\Http\Controllers\Api',
+    'middleware' => 'serializer:array'
 ], function($api) {
     // 通过中间件 api.throttle 设置接口调用限制，限定为 1 分钟 1 次，
     $api->group([
