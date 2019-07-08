@@ -38,6 +38,11 @@ app()->environment('production')  为 true 即为 生产环境
 阿里镜像：
 composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
+常用命令
+$ php artisan make:model Models/Image
+$ php artisan make:request Api/ImageRequest
+$ php artisan make:controller Api/ImagesController
+
 
 
 
