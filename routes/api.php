@@ -54,7 +54,7 @@ $api->version('v1', [
 
     $api->group([
         'middleware' => 'api.throttle',
-        'limit' => 60,
+        'limit' => 600,
         'expires' => 1,
     ], function ($api) {
         // 游客可以访问的接口

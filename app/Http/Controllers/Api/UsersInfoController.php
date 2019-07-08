@@ -59,5 +59,14 @@ class UsersInfoController extends Controller
             $this->user(),
             new UserTransformer()
         );
+
+        // return $this->response->item($this->user(), new UserTransformer())
+        // ->setMeta([
+        //     'access_token' => \Auth::guard('api')->fromUser($this->user()),
+        //     'token_type' => 'Bearer',
+        //     'expires_in' => \Auth::guard('api')->factory()->getTTL() * 60
+        // ]) -> setStatusCode(201);
+
+        // return $this->response->item($user, new UserTransformer()) -> setStatusCode(201);
     }
 }
