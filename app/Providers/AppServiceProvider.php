@@ -14,7 +14,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // if (app()->isLocal()) {
+        //     $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
+        // }
+
+        \API::error(function  (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException  $exception)  {
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(404,  '未找到页面');
+        });
+        \API::error(function  (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException  $exception)  {
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(405,  '页面错误');
+        });
     }
 
     /**
