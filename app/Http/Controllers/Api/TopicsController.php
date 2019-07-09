@@ -12,7 +12,7 @@ class TopicsController extends Controller
     public function store(TopicRequest $request, Topic $topic)
     {
         // 已经有一个模型实例，你可以传递一个数组给 fill 方法来赋值
-        $flight->fill(['name' => 'Flight 22']);
+        // $flight->fill(['name' => 'Flight 22']);
         $topic->fill($request->all());
         $topic->user_id = $this->user()->id;
         $topic->save();
