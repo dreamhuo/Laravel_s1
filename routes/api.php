@@ -36,7 +36,7 @@ $api->version('v2', function($api) {
 // 使 v1 版本的路由都会指向 App\Http\Controllers\Api
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => 'serializer:array'
+    'middleware' => ['serializer:array', 'bindings']
 ], function($api) {
     // 通过中间件 api.throttle 设置接口调用限制，限定为 1 分钟 1 次，
     $api->group([
@@ -74,6 +74,9 @@ $api->version('v1', [
             // 发布话题
             $api->post('topics', 'TopicsController@store')
                 ->name('api.topics.store');
+            // 修改话题
+            $api->patch('topics/{topic}', 'TopicsController@update')
+                ->name('api.topics.update');
         });
     });
 
