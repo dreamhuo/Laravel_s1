@@ -38,4 +38,17 @@ class TopicsController extends Controller
         $topic->update($request->all());
         return $this->response->item($topic, new TopicTransformer());
     }
+
+    // 删除话题
+    public function destroy(Topic $topic)
+    {
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+        // return $this->response->noContent();
+        return $this->response->array([
+            'status' => 1,
+            'message' => '删除话题成功！',
+        ])->setStatusCode(201);
+    }
 }
