@@ -74,6 +74,18 @@ $api->version('v1', [
         });
     });
 
+    // 获取分类
+    $api->get('categories', 'CategoriesController@index')
+        ->name('api.categories.index');
+
+    // 图片资源
+    $api->post('images', 'ImagesController@store')
+        ->name('api.images.store');
+
+    // 发布话题
+    $api->post('topics', 'TopicsController@store')
+        ->name('api.topics.store');
+
     // 登录
     $api->post('authorizations', 'AuthorizationsController@store')
         ->name('api.authorizations.store');
