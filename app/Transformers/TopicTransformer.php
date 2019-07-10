@@ -30,7 +30,10 @@ class TopicTransformer extends TransformerAbstract
         ];
     }
 
-    // 那么什么时候才会引入额外的资源呢，由客户端提交的 include 参数指定，多个参数通过逗号分隔
+    // 客户端需要引入额外的资源，由客户端提交的 include 参数指定，多个参数通过逗号分隔
+    // 在 Transformer 中，我们可以使用：
+    // $this->item () 返回单个资源
+    // $this->collection () 返回集合资源
     public function includeUser(Topic $topic)
     {
         return $this->item($topic->user, new UserTransformer());
