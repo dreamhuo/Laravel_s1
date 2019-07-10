@@ -41,4 +41,13 @@ class RepliesController extends Controller
             'message' => '删除回复成功！',
         ])->setStatusCode(201);
     }
+
+    // 获取回复列表
+    public function index(Topic $topic)
+    {
+        // 通过 models 里获取一条回复对应的多条回复
+        $replies = $topic->replies()->paginate(20);
+
+        return $this->response->paginator($replies, new ReplyTransformer());
+    }
 }

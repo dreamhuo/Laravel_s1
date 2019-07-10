@@ -86,6 +86,9 @@ $api->version('v1', [
             // 删除回复
             $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
                 ->name('api.topics.replies.destroy');
+            // 通知列表
+            $api->get('user/notifications', 'NotificationsController@index')
+                ->name('api.user.notifications.index');
         });
     });
 
@@ -104,6 +107,10 @@ $api->version('v1', [
     // 获取某个用户的话题列表
     $api->get('users/{user}/topics', 'TopicsController@userIndex')
     ->name('api.users.topics.index');
+
+    // 话题回复列表
+    $api->get('topics/{topic}/replies', 'RepliesController@index')
+        ->name('api.topics.replies.index');
 
     // 图片资源
     $api->post('images', 'ImagesController@store')
