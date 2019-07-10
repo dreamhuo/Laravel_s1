@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Transformers\TopicTransformer;
 use App\Http\Requests\Api\TopicRequest;
@@ -77,5 +78,17 @@ class TopicsController extends Controller
         $topics = $query->paginate(20);
 
         return $this->response->paginator($topics, new TopicTransformer());
+    }
+    // 获取单个用户话题列表
+    public function userIndex(User $user, Request $request)
+    {
+        $topics = $user->topics()->recent()->paginate(20);
+        return $this->response->paginator($topics, new TopicTransformer());
+    }
+
+    // 话题详情接口
+    public function show(Topic $topic)
+    {
+        return $this->response->item($topic, new TopicTransformer());
     }
 }

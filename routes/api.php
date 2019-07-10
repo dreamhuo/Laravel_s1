@@ -80,6 +80,12 @@ $api->version('v1', [
             // 删除话题
             $api->delete('topics/{topic}', 'TopicsController@destroy')
                 ->name('api.topics.destroy');
+            // 发布回复
+            $api->post('topics/{topic}/replies', 'RepliesController@store')
+                ->name('api.topics.replies.store');
+            // 删除回复
+            $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
+                ->name('api.topics.replies.destroy');
         });
     });
 
@@ -90,6 +96,14 @@ $api->version('v1', [
     // 获取话题列表
     $api->get('topics', 'TopicsController@index')
         ->name('api.topics.index');
+
+    // 获取话题详情
+    $api->get('topics/{topic}', 'TopicsController@show')
+        ->name('api.topics.show');
+
+    // 获取某个用户的话题列表
+    $api->get('users/{user}/topics', 'TopicsController@userIndex')
+    ->name('api.users.topics.index');
 
     // 图片资源
     $api->post('images', 'ImagesController@store')

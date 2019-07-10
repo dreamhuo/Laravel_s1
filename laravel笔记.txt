@@ -43,6 +43,9 @@ $ php artisan make:model Models/Image
 $ php artisan make:request Api/ImageRequest
 $ php artisan make:controller Api/ImagesController
 
+laravel-query-logger 查询日志组件使用方法
+tail -f ./storage/logs/laravel.log  （tail命令暂不可用，需先用命令进入，遇到再记下）
+暂可直接看 \storage\logs 里 log 日志
 
 
 
