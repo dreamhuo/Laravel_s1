@@ -51,4 +51,31 @@ class TopicsController extends Controller
             'message' => '删除话题成功！',
         ])->setStatusCode(201);
     }
+
+    // 获取话题列表
+    public function index(Request $request, Topic $topic)
+    {
+        // models 中定义 query 方法用来模型检索
+        $query = $topic->query();
+
+        // 若传了分类 id ，则把分类 id 做为查询条件
+        if ($categoryId = $request->category_id) {
+            $query->where('category_id', $categoryId);
+        }
+        // 不同排序使用不同的数据库读取逻辑
+        switch ($request->order) {
+            case 'recent':
+                // 这里调用的是 app\Models\Topic.php 里的私有方法 scopeRecent
+                $query->recent();
+                break;
+            default:
+                // 这里调用的是 app\Models\Topic.php 里的私有方法 scopeRecentReplied
+                $query->recentReplied();
+                break;
+        }
+
+        $topics = $query->paginate(20);
+
+        return $this->response->paginator($topics, new TopicTransformer());
+    }
 }

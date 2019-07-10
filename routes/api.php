@@ -87,6 +87,10 @@ $api->version('v1', [
     $api->get('categories', 'CategoriesController@index')
         ->name('api.categories.index');
 
+    // 获取话题列表
+    $api->get('topics', 'TopicsController@index')
+        ->name('api.topics.index');
+
     // 图片资源
     $api->post('images', 'ImagesController@store')
         ->name('api.images.store');
