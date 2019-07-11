@@ -43,6 +43,7 @@ class TopicsController extends Controller
     // 删除话题
     public function destroy(Topic $topic)
     {
+        // 话题删除接口 会通过 授权策略 提供的 authorize 方法来判断了用户是否具备某个操作的权限
         $this->authorize('destroy', $topic);
 
         $topic->delete();

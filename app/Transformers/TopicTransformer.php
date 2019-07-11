@@ -34,6 +34,7 @@ class TopicTransformer extends TransformerAbstract
     // 在 Transformer 中，我们可以使用：
     // $this->item () 返回单个资源
     // $this->collection () 返回集合资源
+    // ***注意这里，获取权限 user.roles 才会获取角色 http://127.1.1.0:8082/api/topics?include=category,user.roles
     public function includeUser(Topic $topic)
     {
         return $this->item($topic->user, new UserTransformer());
