@@ -121,6 +121,10 @@ $api->version('v1', [
     $api->get('topics/{topic}/replies', 'RepliesController@index')
         ->name('api.topics.replies.index');
 
+    // 右侧资源推荐
+    $api->get('links', 'LinksController@index')
+        ->name('api.links.index');
+
     // 图片资源
     $api->post('images', 'ImagesController@store')
         ->name('api.images.store');
