@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 21/06/2019 10:25:58
+ Date: 12/07/2019 16:31:38
 */
 
 SET NAMES utf8mb4;
@@ -38,16 +38,49 @@ INSERT INTO `categories` VALUES (3, '问答', '请保持友善，互帮互助', 
 INSERT INTO `categories` VALUES (4, '公告', '站点公告', 0);
 
 -- ----------------------------
+-- Table structure for images
+-- ----------------------------
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images`  (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `created_at` timestamp(0) DEFAULT NULL,
+  `updated_at` timestamp(0) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of images
+-- ----------------------------
+INSERT INTO `images` VALUES (1, 2, 'avatar', 'http://localhost:8082/uploads/images/avatars/201907/08/2_1562571480_yrsu1SUfTl.png', '2019-07-08 15:38:00', '2019-07-08 15:38:00');
+INSERT INTO `images` VALUES (2, 2, 'topic', 'http://localhost:8082/uploads/images/topics/201907/08/2_1562571941_PSGGgkp8pv.png', '2019-07-08 15:45:41', '2019-07-08 15:45:41');
+INSERT INTO `images` VALUES (3, 2, 'topic', 'http://localhost:8082/uploads/images/topics/201907/08/2_1562571943_1mHmA90jyd.png', '2019-07-08 15:45:43', '2019-07-08 15:45:43');
+INSERT INTO `images` VALUES (4, 2, 'topic', 'http://localhost:8082/uploads/images/topics/201907/08/2_1562571944_BURDA9YRtf.png', '2019-07-08 15:45:45', '2019-07-08 15:45:45');
+INSERT INTO `images` VALUES (5, 2, 'topic', 'http://localhost:8082/uploads/images/topics/201907/08/2_1562571999_U6zEg9JO5b.png', '2019-07-08 15:46:39', '2019-07-08 15:46:39');
+INSERT INTO `images` VALUES (6, 2, 'avatar', 'http://localhost:8082/uploads/images/avatars/201907/08/2_1562572007_5b4E5BEGjm.png', '2019-07-08 15:46:48', '2019-07-08 15:46:48');
+INSERT INTO `images` VALUES (7, 2, 'avatar', 'http://localhost:8082/uploads/images/avatars/201907/08/2_1562572024_Dt1Hp08xoV.jpg', '2019-07-08 15:47:04', '2019-07-08 15:47:04');
+INSERT INTO `images` VALUES (8, 2, 'avatar', 'http://localhost:8082/uploads/images/avatars/201907/08/2_1562572060_DfOgFx2DET.png', '2019-07-08 15:47:40', '2019-07-08 15:47:40');
+INSERT INTO `images` VALUES (9, 2, NULL, 'http://localhost:8082/uploads/images/avatars/201907/08/2_1562577503_KWe0wMLHXV.jpg', '2019-07-08 17:18:23', '2019-07-08 17:18:23');
+
+-- ----------------------------
 -- Table structure for model_has_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `model_has_permissions`;
 CREATE TABLE `model_has_permissions`  (
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL,
+  `permission_id` int(10) UNSIGNED NOT NULL COMMENT '对应权限表的 id',
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模型类型 App\\Models\\User ',
+  `model_id` bigint(20) UNSIGNED NOT NULL COMMENT '模型id  对应模型 id',
   PRIMARY KEY (`permission_id`, `model_id`, `model_type`) USING BTREE,
   INDEX `model_has_permissions_model_id_model_type_index`(`model_id`, `model_type`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of model_has_permissions
+-- ----------------------------
+INSERT INTO `model_has_permissions` VALUES (7, 'App\\Models\\User', 3);
+INSERT INTO `model_has_permissions` VALUES (9, 'App\\Models\\User', 3);
 
 -- ----------------------------
 -- Table structure for model_has_roles
@@ -60,6 +93,12 @@ CREATE TABLE `model_has_roles`  (
   PRIMARY KEY (`role_id`, `model_id`, `model_type`) USING BTREE,
   INDEX `model_has_roles_model_id_model_type_index`(`model_id`, `model_type`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of model_has_roles
+-- ----------------------------
+INSERT INTO `model_has_roles` VALUES (8, 'App\\Models\\User', 2);
+INSERT INTO `model_has_roles` VALUES (8, 'App\\Models\\User', 3);
 
 -- ----------------------------
 -- Table structure for notifications
@@ -94,20 +133,26 @@ INSERT INTO `notifications` VALUES ('ee903242-4eef-474a-aa28-24e6fc442ad7', 'App
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp(0) DEFAULT NULL,
-  `updated_at` timestamp(0) DEFAULT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '权限id',
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限name',
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限分组，在模型中 protected $guard_name = \'admin\'; 与分组一样，才能设置',
+  `created_at` timestamp(0) DEFAULT NULL COMMENT '创建时间',
+  `updated_at` timestamp(0) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES (1, 'manage_contents', '11', '2019-06-18 15:35:03', '2019-06-18 15:35:03');
-INSERT INTO `permissions` VALUES (2, 'manage_users', '22', '2019-06-20 14:23:55', '2019-06-20 14:23:58');
-INSERT INTO `permissions` VALUES (3, 'edit_settings', '33', '2019-06-20 14:24:17', '2019-06-20 14:24:19');
+INSERT INTO `permissions` VALUES (6, 'edit articles3', 'web', '2019-06-21 15:55:32', '2019-06-21 15:55:32');
+INSERT INTO `permissions` VALUES (5, 'edit articles2', 'web', '2019-06-21 15:44:09', '2019-06-21 15:44:09');
+INSERT INTO `permissions` VALUES (4, 'edit articles', 'web', '2019-06-21 15:43:13', '2019-06-21 15:43:13');
+INSERT INTO `permissions` VALUES (7, 'publish articles', 'admin', '2019-06-21 16:31:39', '2019-06-21 16:31:39');
+INSERT INTO `permissions` VALUES (8, 'publish', 'admin', '2019-06-21 16:55:49', '2019-06-21 16:55:52');
+INSERT INTO `permissions` VALUES (9, '编辑文章', 'admin', '2019-06-27 13:12:01', '2019-06-27 13:12:01');
+INSERT INTO `permissions` VALUES (10, 'manage_contents', 'admin', '2019-07-11 09:43:23', '2019-07-11 09:43:25');
+INSERT INTO `permissions` VALUES (11, 'manage_users', 'admin', '2019-07-11 09:43:40', '2019-07-11 09:43:43');
+INSERT INTO `permissions` VALUES (12, 'manage_settings', 'admin', '2019-07-11 09:43:56', '2019-07-11 09:43:58');
 
 -- ----------------------------
 -- Table structure for replies
@@ -121,7 +166,7 @@ CREATE TABLE `replies`  (
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 53 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of replies
@@ -131,6 +176,7 @@ INSERT INTO `replies` VALUES (16, 3, 53, '321432143214321', '2019-06-18 15:29:23
 INSERT INTO `replies` VALUES (17, 3, 53, '魂牵梦萦要', '2019-06-18 15:31:20', '2019-06-18 15:31:20');
 INSERT INTO `replies` VALUES (18, 3, 53, '魂牵梦萦要', '2019-06-18 15:34:28', '2019-06-18 15:34:28');
 INSERT INTO `replies` VALUES (19, 3, 53, '魂牵梦萦要城', '2019-06-18 15:35:03', '2019-06-18 15:35:03');
+INSERT INTO `replies` VALUES (53, 3, 41, '<p>回复一个</p>', '2019-07-10 15:02:41', '2019-07-10 15:02:41');
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -144,6 +190,14 @@ CREATE TABLE `role_has_permissions`  (
 ) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
+-- Records of role_has_permissions
+-- ----------------------------
+INSERT INTO `role_has_permissions` VALUES (10, 7);
+INSERT INTO `role_has_permissions` VALUES (10, 8);
+INSERT INTO `role_has_permissions` VALUES (11, 8);
+INSERT INTO `role_has_permissions` VALUES (12, 8);
+
+-- ----------------------------
 -- Table structure for roles
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
@@ -154,13 +208,17 @@ CREATE TABLE `roles`  (
   `created_at` timestamp(0) DEFAULT NULL,
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, 'Founder', 'manage_contents,manage_users,edit_settings', '2019-06-20 14:27:41', '2019-06-20 14:27:45');
-INSERT INTO `roles` VALUES (2, 'Maintainer', 'manage_contents', '2019-06-20 14:28:05', '2019-06-20 14:28:07');
+INSERT INTO `roles` VALUES (5, 'writer3', 'web', '2019-06-21 15:55:32', '2019-06-21 15:55:32');
+INSERT INTO `roles` VALUES (3, 'writer', 'web', '2019-06-21 15:43:13', '2019-06-21 15:43:13');
+INSERT INTO `roles` VALUES (4, 'writer2', 'web', '2019-06-21 15:44:09', '2019-06-21 15:44:09');
+INSERT INTO `roles` VALUES (6, 'superadmin', 'admin', '2019-06-21 16:31:39', '2019-06-21 16:31:39');
+INSERT INTO `roles` VALUES (7, 'Maintainer', 'admin', '2019-07-11 09:41:38', '2019-07-11 09:41:41');
+INSERT INTO `roles` VALUES (8, 'Founder', 'admin', '2019-07-11 09:42:01', '2019-07-11 09:42:04');
 
 -- ----------------------------
 -- Table structure for topics
@@ -182,37 +240,27 @@ CREATE TABLE `topics`  (
   `updated_at` timestamp(0) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `title`(`title`, `user_id`, `category_id`, `reply_count`, `view_count`, `last_reply_user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 54 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 56 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of topics
 -- ----------------------------
 INSERT INTO `topics` VALUES (38, '客厅fdsfdfd', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, '霏霏 在在在在', '2019-06-17 13:26:01', '2019-06-17 13:26:01');
 INSERT INTO `topics` VALUES (37, '魂牵梦萦', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, '=============…魂牵梦萦', '2019-06-17 13:24:57', '2019-06-17 13:24:57');
-INSERT INTO `topics` VALUES (36, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 13:21:07', '2019-06-17 13:21:07');
-INSERT INTO `topics` VALUES (35, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 13:20:13', '2019-06-17 13:20:13');
-INSERT INTO `topics` VALUES (34, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 13:20:02', '2019-06-17 13:20:02');
 INSERT INTO `topics` VALUES (33, '12121', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 13:19:10', '2019-06-17 13:19:10');
 INSERT INTO `topics` VALUES (32, '南市', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-17 13:18:15', '2019-06-17 13:18:15');
 INSERT INTO `topics` VALUES (31, '客厅', 3, 2, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2019-06-17 13:18:01', '2019-06-17 13:18:01');
 INSERT INTO `topics` VALUES (30, '户型简介', 3, 4, NULL, NULL, NULL, NULL, NULL, NULL, '圾有有有有有有未设置内容…', '2019-06-17 13:17:34', '2019-06-17 13:17:34');
 INSERT INTO `topics` VALUES (29, '客厅', 3, 2, NULL, NULL, NULL, NULL, NULL, NULL, '111111111111111111111111111111', '2019-06-17 13:16:00', '2019-06-17 13:16:00');
 INSERT INTO `topics` VALUES (28, '客厅', 3, 2, NULL, NULL, NULL, NULL, NULL, NULL, '21212121', '2019-06-17 13:15:29', '2019-06-17 13:15:29');
-INSERT INTO `topics` VALUES (27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 11:07:19', '2019-06-17 11:07:19');
-INSERT INTO `topics` VALUES (26, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 11:06:52', '2019-06-17 11:06:52');
-INSERT INTO `topics` VALUES (25, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', '2019-06-17 10:35:08', '2019-06-17 10:35:08');
 INSERT INTO `topics` VALUES (40, '35435432', 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, '暂未设4324324324置内容…', '2019-06-17 13:40:32', '2019-06-17 13:40:32');
-INSERT INTO `topics` VALUES (41, '割发代首割发代首', 3, 2, NULL, NULL, NULL, NULL, '====3243214321435====4354325432=暂未设置内容…', NULL, '====3243214321435====4354325432=暂未设置内容…', '2019-06-17 13:53:33', '2019-06-17 13:53:33');
-INSERT INTO `topics` VALUES (42, NULL, 3, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', NULL, '暂未设置内容…', '2019-06-17 14:01:54', '2019-06-17 14:01:54');
-INSERT INTO `topics` VALUES (43, NULL, 3, NULL, NULL, NULL, NULL, NULL, '暂未设置内容…', NULL, '暂未设置内容…', '2019-06-17 14:17:16', '2019-06-17 14:17:16');
+INSERT INTO `topics` VALUES (41, '割发代首割发代首', 3, 2, 1, NULL, NULL, NULL, '====3243214321435====4354325432=暂未设置内容…', NULL, '<p>====3243214321435====4354325432=暂未设置内容…</p>', '2019-06-17 13:53:33', '2019-07-10 15:18:17');
 INSERT INTO `topics` VALUES (44, '魂牵梦萦', 3, 2, NULL, NULL, NULL, NULL, '1魂牵梦4545454萦要要', NULL, '1魂牵梦4545454萦要要', '2019-06-17 14:19:13', '2019-06-17 14:19:13');
 INSERT INTO `topics` VALUES (45, '需要要要', 3, 2, NULL, NULL, NULL, NULL, '魂牵梦萦魂牵梦萦魂牵梦萦', NULL, '<p><b>魂牵梦萦魂牵</b>梦<i>萦魂牵梦</i>萦</p>', '2019-06-17 15:15:35', '2019-06-17 15:15:35');
 INSERT INTO `topics` VALUES (46, '1212121', 3, 2, NULL, NULL, NULL, NULL, '暂未设置内容…', NULL, '<p>暂未设置内容…<img alt=\"98平D户型2室2厅2卫1厨.png\" src=\"http://localhost:8082/uploads/images/topics/201906/17/3_1560756192_XSgFR9FgTN.png\" width=\"400\" height=\"400\"></p>', '2019-06-17 15:23:58', '2019-06-17 15:23:58');
 INSERT INTO `topics` VALUES (47, '魂牵梦萦', 3, 3, NULL, NULL, NULL, NULL, '&lt;script&gt;alert(\'存在 XSS 安全威胁！\')&lt;/script&gt;', NULL, '<p><span style=\"font-size: 1px;\">&lt;script&gt;alert(\'存在 XSS 安全威胁！\')&lt;/script&gt;</span><br></p>', '2019-06-17 16:08:39', '2019-06-17 16:08:39');
 INSERT INTO `topics` VALUES (48, '户型简介', 3, 2, NULL, NULL, NULL, NULL, 'alert(\'存在 XSS 安全威胁！\')', NULL, '<script>alert(\'存在 XSS 安全威胁！\')</script>', '2019-06-17 16:24:56', '2019-06-17 16:24:56');
 INSERT INTO `topics` VALUES (49, '户型简介', 3, 2, NULL, NULL, NULL, NULL, '看一下是否正常    是不是正常', NULL, '<p>看一下是否正常</p>\r\n\r\n\r\n\r\n<p>是不是正常</p>', '2019-06-17 16:53:55', '2019-06-17 16:53:55');
-INSERT INTO `topics` VALUES (50, '户型简介', 3, 2, NULL, NULL, NULL, NULL, '看一下是====否正常  是不====###是正常', NULL, '<p>看一下是====否正常\r\n\r\n是不====###是正常</p>', '2019-06-17 16:54:21', '2019-06-17 16:54:21');
-INSERT INTO `topics` VALUES (51, '户型简介', 3, 2, NULL, NULL, NULL, NULL, 'alert(11111111111111)', NULL, '<p>alert(11111111111111)</p>', '2019-06-17 16:56:49', '2019-06-17 16:56:49');
 INSERT INTO `topics` VALUES (53, '户型简介', 3, 2, 5, NULL, NULL, NULL, '要要要要', NULL, '<p>要要要要</p>', '2019-06-18 15:26:53', '2019-06-18 15:35:03');
 
 -- ----------------------------
@@ -230,14 +278,17 @@ CREATE TABLE `users`  (
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `introduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `notification_count` bigint(20) DEFAULT 0,
+  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Token` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (2, 'fdsa', 'fdsa@fdsa.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', 'Zi6HyyzU66', '2019-06-12 17:11:47', '2019-06-12 17:11:47', NULL, NULL, 0);
-INSERT INTO `users` VALUES (3, 'tospur_pc', 'huo8008@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', '2qwDQD53x1', '2019-06-13 10:38:39', '2019-06-19 14:34:33', 'http://localhost:8082/uploads/images/avatars/201906/13/3_1560412735_CgHBdMJc2b.jpg', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', 0);
-INSERT INTO `users` VALUES (4, 'dDDsss', 'huo8009@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23', NULL, NULL, 0);
+INSERT INTO `users` VALUES (2, '121212121', 'fdsa@fdsa.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', 'Zi6HyyzU66', '2019-06-12 17:11:47', '2019-07-09 10:13:13', NULL, NULL, 0, NULL, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODA4MiIsImlhdCI6MTU2MjIwNzk2NiwiZXhwIjoxNTYyMjExNTY2LCJuYmYiOjE1NjIyMDc5NjYsImp0aSI6IldEd3JFZzVuT0Q4U3Y0MEsiLCJzdWIiOjIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.SPn6PTJ7im93ns34AeyiW1i5J3H_pVD5XajIZSZjIfw');
+INSERT INTO `users` VALUES (3, 'tospur_pc', 'huo8008@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', '2qwDQD53x1', '2019-06-13 10:38:39', '2019-06-19 14:34:33', 'http://localhost:8082/uploads/images/avatars/201906/13/3_1560412735_CgHBdMJc2b.jpg', '我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟我是一只小小鸟', 0, NULL, NULL);
+INSERT INTO `users` VALUES (4, 'dDDsss', 'huo8009@126.com', '$2y$10$8qJNP0aR5xnjKKCHL3uRj.Qy/Nw2vN0VBQsg7.992FXYoOB2LYcnq', NULL, '2019-06-19 09:48:23', '2019-06-19 09:48:23', NULL, NULL, 0, NULL, NULL);
+INSERT INTO `users` VALUES (5, 'huocs', NULL, '$2y$10$SrFClTaPjMsqx6dPGx8IIeKgDrxaJrhqPLhWB25f9hVI7ZhDK8Wo6', NULL, '2019-07-03 11:08:57', '2019-07-03 11:08:57', NULL, NULL, 0, NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
