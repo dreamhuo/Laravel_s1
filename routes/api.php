@@ -61,7 +61,7 @@ $api->version('v1', [
 
         // 需要 token 验证的接口
         // DingoApi 为我们准备好了 api.auth 中间件，用来区分哪些接口需要验证 token
-        $api->group(['middleware' => 'api.auth'], function($api) {
+        $api->group(['middleware' => 'token.canrefresh'], function($api) {
             // 当前登录用户信息
             $api->get('user', 'UsersInfoController@me')
                 ->name('api.user.show');
