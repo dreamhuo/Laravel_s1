@@ -27,9 +27,9 @@ class AppServiceProvider extends ServiceProvider
         \API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
             abort(403, '您没有权限');
         });
-        // \API::error(function  (\Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception)  {
-        //     throw new \Symfony\Component\HttpKernel\Exception\HttpException(401,  '没有权限');
-        // });
+        \API::error(function  (\Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception)  {
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(401,  '没有权限');
+        });
     }
 
     /**
