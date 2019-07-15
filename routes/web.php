@@ -55,3 +55,6 @@ Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 
 
+Route::get('categories', 'CategoriesController@index')->name('categories');
+
+
