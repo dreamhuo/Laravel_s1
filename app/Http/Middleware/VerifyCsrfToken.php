@@ -42,4 +42,28 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
     ];
+//    protected $except = [
+//
+//        '/classroom_upload',
+//        'wk_upload',
+//        'wechat',
+//    ];
+    // 验证tokens
+    protected function tokensMatch($request)
+    {
+         // 如果当前是 ajax 获取 header 里的 X-CSRF-TOKEN 字段；
+         // 然后再判断 session 里 token 与 前端传的 token是否相同
+         // 前端方法 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+         $token = $request->ajax() ? $request->header('X-CSRF-TOKEN') : $request->input('_token');
+         return $request->session()->token() == $token;
+    }
+
+    public function handle($request,\Closure $next){
+       // POST 请求一般是登录后，不需要验证
+        if($request->method() == 'POST')
+        {
+            return $next($request);
+        }
+        return parent::handle($request,$next);
+     }
 }
