@@ -19,4 +19,15 @@ class CategoriesController extends Controller
     {
         return response()->json(Category::all());
     }
+    public function getHead(Request $request)
+    {
+        $referer = $request->header('Referer');
+        $acceptLanguage = $request->header('Accept-Language');
+        $userAgent = $request->header('User-Agent');
+        return [
+            'Referer' => $referer,
+            'Accept-Language' => $acceptLanguage,
+            'User-Agent' => $userAgent
+        ];
+    }
 }

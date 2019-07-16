@@ -57,4 +57,6 @@ Route::resource('notifications', 'NotificationsController', ['only' => ['index']
 
 Route::get('categories', 'CategoriesController@index')->name('categories');
 
+Route::get('getHead', 'CategoriesController@getHead')->name('getHead');
+
 

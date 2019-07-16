@@ -35,6 +35,11 @@
 
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}"></script>
+  <script type="text/javascript">
+    $.get('http://127.1.1.0:8082/getHead', function (rtn) {
+      console.log(rtn);
+    })
+  </script>
   @yield('scripts')
 </body>
 
