@@ -48,5 +48,45 @@ tail -f ./storage/logs/laravel.log  （tail命令暂不可用，需先用命令�
 暂可直接看 \storage\logs 里 log 日志
 
 
+服务器配置
+server {
+    listen 80;
+    server_name a.com;
+
+    location / {
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   Host      $http_host;
+        proxy_pass         http://127.0.0.1:8082;
+    }
+}
+
+server {
+    listen 80;
+    server_name b.com;
+
+    location / {
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   Host      $http_host;
+        proxy_pass         http://127.0.0.1:8083;
+    }
+}
+node项目部署——阿里云cento部署node和nginx
+https://www.jianshu.com/p/7aad651bdbb4
+
+Node.js + Nginx 部署 HTTPS 服务
+https://www.imooc.com/article/34844
+
+从 node服务部署，到https配置与nginx转发
+https://segmentfault.com/a/1190000017371594
+
+Forever+nginx部署Node站点的方法示例
+https://www.jb51.net/article/158974.htm
+
+Nginx反向代理部署Node.js应用配置方法
+https://www.cnblogs.com/Mcrown/p/9794449.html
+
+node项目部署常规流程记录
+https://cloud.tencent.com/developer/article/1360425
+
 
 
